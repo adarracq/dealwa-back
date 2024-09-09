@@ -29,7 +29,6 @@ exports.getOneProject = (req, res, next) => {
 };
 
 exports.getAllProjectsByUser = (req, res, next) => {
-    console.log(req.params.userId);
     Project.find({ user_id: req.params.userId }).then(
         (projects) => {
             res.status(200).json(projects);
@@ -124,7 +123,6 @@ exports.modifyProject = (req, res, next) => {
 
     Project.findOne({ _id: req.params.id })
         .then((project) => {
-            console.log(project);
             //if (project.userId != req.auth.userId) {
             //    res.status(401).json({ message: 'Not authorized' });
             //} else {
