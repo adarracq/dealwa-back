@@ -12,6 +12,6 @@ router.get('/:id', projectCtrl.getOneProject);
 router.get('/user/:userId', projectCtrl.getAllProjectsByUser);
 router.post('/zones', projectCtrl.getProjectsInZones);
 router.put('/:id', multer, projectCtrl.modifyProject);
-router.delete('/:id', auth, projectCtrl.deleteProject);
+router.delete('/:id', projectCtrl.deleteProject);
 
 module.exports = router;

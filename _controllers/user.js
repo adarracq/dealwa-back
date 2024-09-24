@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const User = require('../_models/user');
+const User = require('../_models/User');
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -42,6 +42,17 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error: 'Internal Error' }));
 };
 
+exports.userExist = (req, res, next) => {
+    User.findOne({ email: req.params.email })
+        .then(user => {
+            if (!user) {
+                return res.status(200).json({ exist: false });
+            }
+            return res.status(200).json({ exist: true });
+        })
+        .catch(error => res.status(404).json({ error: 'Not Found' }));
+}
+
 exports.getUserByEmail = (req, res, next) => {
     User.findOne({ email: req.params.email })
         //.then(user => res.status(200).json(user))
@@ -79,13 +90,3 @@ exports.uploadPicture = (req, res, next) => {
         .then((user) => res.status(200).json(user))
         .catch(error => res.status(400).json({ error: 'Not Found' }));
 };
-
-exports.addZone = (req, res, next) => {
-
-    User.findOneAndUpdate(
-        { email: req.params.email },
-        { $push: { zones: req.body } },
-        { new: true })
-        .then((user) => res.status(200).json(user))
-        .catch(error => res.status(400).json({ error: 'Not Found' }));
-}

@@ -10,19 +10,8 @@ const userSchema = mongoose.Schema({
     languages: { type: [Number], required: false },
     imageUrl: { type: String, required: false },
     type: { type: String, required: true }, // user or agent
-    // next fields are for agents
-    network: { type: String, required: false },
-    status: { type: String, required: false },
-    specialities: { type: [String], required: false },
-    experience: { type: Number, required: false }, // in years
-    presentation: { type: String, required: false },
-    zones: { type: [Object], required: false },
-    // subscription
-    plan: { type: Number, required: false }, // premium or basic
-    bill: { type: Number, required: false }, // month or year
-    subscriptionDate: { type: Date, required: false },
-    expirationDate: { type: Date, required: false },
-
+    status: { type: String, required: false }, // verify, unverify, pending or banned
+    verified: { type: Boolean, required: false },
 });
 
 userSchema.plugin(uniqueValidator);

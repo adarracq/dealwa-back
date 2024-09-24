@@ -139,16 +139,16 @@ exports.modifyProject = (req, res, next) => {
 exports.deleteProject = (req, res, next) => {
     Project.findOne({ _id: req.params.id })
         .then(project => {
-            if (project.userId != req.auth.userId) {
-                res.status(401).json({ message: 'Not authorized' });
-            } else {
-                const filename = project.imageUrl.split('/_upload/images/')[1];
-                fs.unlink(`_upload/images/${filename}`, () => {
-                    Project.deleteOne({ _id: req.params.id })
-                        .then(() => { res.status(200).json({ message: 'Projet supprimé !' }) })
-                        .catch(error => res.status(401).json({ error }));
-                });
-            }
+            //if (project.userId != req.auth.userId) {
+            //    res.status(401).json({ message: 'Not authorized' });
+            //} else {
+            //const filename = project.imageUrl.split('/_upload/images/')[1];
+            //fs.unlink(`_upload/images/${filename}`, () => {
+            Project.deleteOne({ _id: req.params.id })
+                .then(() => { res.status(200).json({ message: 'Projet supprimé !' }) })
+                .catch(error => res.status(401).json({ error }));
+            //});
+            //}
         })
         .catch(error => {
             res.status(500).json({ error });
