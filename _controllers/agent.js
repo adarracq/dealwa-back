@@ -41,7 +41,8 @@ exports.updateAgent = (req, res, next) => {
 exports.addZones = (req, res, next) => {
     Agent.findOneAndUpdate(
         { email: req.params.email },
-        { $push: { zones: req.body } },
+        { zones: req.body },
+        //{ $push: { zones: req.body } },
         { new: true })
         .then((agent) => res.status(200).json(agent))
         .catch(error => res.status(400).json({ error: 'Not Found' }));

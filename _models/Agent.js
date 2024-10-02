@@ -4,11 +4,11 @@ const uniqueValidator = require('mongoose-unique-validator');
 const agentSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true },
     network: { type: String, required: false },
-    status: { type: String, required: false },
-    specialities: { type: [String], required: false },
-    experience: { type: Number, required: false }, // in years
-    presentation: { type: String, required: false },
+    workStatus: { type: Number, required: false }, // Salarié ou Indépendant
+    specialities: { type: [Number], required: false },
+    experience: { type: Number, required: false }, // in yearss
     zones: { type: [Object], required: false },
+    maxZones: { type: Number, required: false },
     idCCI: { type: String, required: false },
     // subscription
     plan: { type: Number, required: false }, // premium or basic

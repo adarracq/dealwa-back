@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
     firstname: { type: String, required: false },
     lastname: { type: String, required: false },
     birthdate: { type: String, required: false },
+    presentation: { type: String, required: false },
     languages: { type: [Number], required: false },
     imageUrl: { type: String, required: false },
     type: { type: String, required: true }, // user or agent

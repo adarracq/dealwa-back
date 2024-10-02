@@ -7,6 +7,7 @@ const app = express();
 const projectRoutes = require('./_routes/project');
 const userRoutes = require('./_routes/user');
 const agentRoutes = require('./_routes/agent');
+const eventRoutes = require('./_routes/event');
 
 mongoose.connect('mongodb+srv://antoinecd:fVu0vXm1vBR1LnuM@dealwacluster.cj5vq.mongodb.net/?retryWrites=true&w=majority&appName=DealwaCluster',
     {
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 app.use('/api/project', projectRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/agent', agentRoutes);
+app.use('/api/event', eventRoutes);
 app.use('/_upload/images', express.static(path.join(__dirname, '_upload/images')));
 
 

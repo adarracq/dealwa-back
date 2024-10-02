@@ -42,9 +42,30 @@ exports.getAllProjectsByUser = (req, res, next) => {
     );
 }
 
-
 exports.getProjectsInZones = (req, res, next) => {
+    let zonesCodes = [];
+    req.body.forEach(zone => {
+        zonesCodes.push(zone.code);
+    });
+    Project.find({
+        'zone.code': { $in: zonesCodes }
+    }).then(
+        (projects) => {
+            res.status(200).json(projects);
+        }
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error: error
+            });
+        }
+    );
+}
 
+
+exports.getProjectsInZonesOld = (req, res, next) => {
+
+    console.log(req.body[0]);
     switch (req.body.length) {
         case 0:
             res.status(200).json([]);
@@ -53,7 +74,7 @@ exports.getProjectsInZones = (req, res, next) => {
             Project.find({
                 coord: {
                     $geoWithin: {
-                        $centerSphere: [[req.body[0].center.longitude, req.body[0].center.latitude], req.body[0].radius / 6378100]
+                        $centerSphere: [[req.body[0].center[0], req.body[0].center[1]], req.body[0].radius / 6378100]
                     }
                 }
             })
@@ -73,17 +94,17 @@ exports.getProjectsInZones = (req, res, next) => {
         case 3:
             let projects = [];
             Project.find({
-                coord: { $geoWithin: { $centerSphere: [[req.body[0].center.longitude, req.body[0].center.latitude], req.body[0].radius / 6378100] } }
+                coord: { $geoWithin: { $centerSphere: [[req.body[0].center[0], req.body[0].center[1]], req.body[0].radius / 6378100] } }
             })
                 .then(projectsInZone => {
                     projects = projectsInZone;
                     Project.find({
-                        coord: { $geoWithin: { $centerSphere: [[req.body[1].center.longitude, req.body[1].center.latitude], req.body[1].radius / 6378100] } }
+                        coord: { $geoWithin: { $centerSphere: [[req.body[1].center[0], req.body[1].center[1]], req.body[1].radius / 6378100] } }
                     })
                         .then(projectsInZone => {
                             projects = projects.concat(projectsInZone);
                             Project.find({
-                                coord: { $geoWithin: { $centerSphere: [[req.body[2].center.longitude, req.body[2].center.latitude], req.body[2].radius / 6378100] } }
+                                coord: { $geoWithin: { $centerSphere: [[req.body[2].center[0], req.body[2].center[1]], req.body[2].radius / 6378100] } }
                             })
                                 .then(projectsInZone => {
                                     projects = projects.concat(projectsInZone);

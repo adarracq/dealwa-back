@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const userCtrl = require('../_controllers/agent');
+const agentCtrl = require('../_controllers/agent');
 const multer = require('../_middlewares/multer-config');
 
-router.get('/:email', userCtrl.getAgentByEmail);
-router.get('/id/:id', userCtrl.getAgentById);
-router.post('/', userCtrl.createAgent);
-router.put('/:email', userCtrl.updateAgent);
-router.post('/zone/:email', userCtrl.addZones);
+router.get('/:email', agentCtrl.getAgentByEmail);
+router.get('/id/:id', agentCtrl.getAgentById);
+router.post('/', agentCtrl.createAgent);
+router.put('/:email', agentCtrl.updateAgent);
+router.post('/zone/:email', agentCtrl.addZones);
 
 module.exports = router;
